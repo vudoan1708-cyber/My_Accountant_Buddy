@@ -10,6 +10,10 @@
 
 <section>
 	<h1>My Accounting Buddy</h1>
+	<p>
+		This is a little accounting software that I make to efficiently learn about finance & accounting
+		and to quickly compute and estimate my financial situation
+	</p>
 </section>
 
 <style>

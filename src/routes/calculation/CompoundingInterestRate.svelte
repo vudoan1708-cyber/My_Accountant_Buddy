@@ -1,5 +1,13 @@
 <script>
-  export let variables = {
+	import { onMount } from "svelte";
+
+  // Component
+	import Button from "$lib/components/Button.svelte";
+
+  // Helpers
+  import superParseFloat from "$lib/helpers/superParseFloat";
+
+  let variables = {
     fv: 0,
     pv: 0,
     r: 0,
@@ -7,10 +15,55 @@
     unknown: 0,
   };
   /** @type {'fv' | 'pv' | 'r' | 't' | 'unknown'} */
-  export let unknown = 'unknown';
+  let unknown = 'unknown';
+
+  const findTheUnknownVariable = () => {
+    if (!variables.fv && !variables.pv && !variables.r && !variables.t) return 'unknown';
+
+    if (!variables.fv) return 'fv';
+    if (!variables.pv) return 'pv';
+    if (!variables.r) return 'r';
+    if (!variables.t) return 't';
+    return 'unknown';
+  }
+
+  const calculate = {
+    /** @description the multiplication of PV and the addition of 1 and rate percent to the t-th power */
+    fv() {
+      return superParseFloat(variables.pv * ((1 + variables.r / 100) ** variables.t), 4);
+    },
+    /** @description the division of FV and the addition of 1 and rate percent to the t-th power */
+    pv() {
+      return superParseFloat(variables.fv / ((1 + variables.r / 100) ** variables.t), 4);
+    },
+    /** @description t-th root of FV over PV minus 1 */
+    r() {
+      return (Math.pow(superParseFloat(variables.fv / variables.pv, 4), 1 / variables.t) - 1) * 100;
+    },
+    // Reference: https://www.golinuxcloud.com/javascript-math-log/
+    t() {
+      return Math.round(Math.log(variables.fv / variables.pv) / (variables.r / 100));
+    },
+    unknown() {
+      return 0;
+    }
+  };
+
+  const clear = () => {
+    variables.fv = 0;
+    variables.pv = 0;
+    variables.r = 0;
+    variables.t = 0;
+  };
+
+  let isMounted = false;
+  onMount(() => {
+    isMounted = true;
+  });
 </script>
 
 <!-- <template> -->
+<section>
   <form on:submit|preventDefault>
     <label>
       <span class="variable">FV</span>
@@ -73,11 +126,12 @@
       The formula is used to calculate financial values with <b>compounding interest rates</b>,
       meaning you're paying or earning interests on interests.
     </span>
-    If you're looking to compute the future value given the other 3 numeric values,
-    the equation above is going to give you an approximation into the future given a compounding interest rate.
+    If you're looking to compute the future value,
+    the equation above is going to give you an approximation of the future return with a compounding interest rate.
 
-    However, if you're looking to compute the present value,
-    this is called discounting future cash back to the present.
+    However, if you're looking to compute the present value -
+    this is called discounting future cash back to the present, where, given future value, interest rate and time,
+    you can estimate how much is needed to deposit into your bank account.
     Below are the explanation of the notations:
     <ul>
       <li><span class="variable">FV</span>: Future Value - A financial value in the <b>future time</b></li>
@@ -86,25 +140,26 @@
       <li><span class="variable">T</span>: The time value of the money (is usually counted in <b>years)</b></li>
     </ul>
   </div>
+
+  <span style="align-self: flex-end;">
+    <Button id="clear" disabled={!isMounted} type="secondary" on:click={clear}>
+      Clear
+    </Button>
+    <Button id="calculate" disabled={!isMounted} on:click={() => {
+      unknown = findTheUnknownVariable();
+      variables[unknown] = calculate[unknown]();
+    }}>
+      Calculate
+    </Button>
+  </span>
+</section>
 <!-- </template> -->
 
 <style>
-  .helper {
-    display: grid;
-    align-items: center;
+  section {
+    display: flex;
+    flex-direction: column;
     gap: calc(var(--margin) * 2);
-    padding: var(--padding);
-    background-color: var(--color-bg-2);
-    border-radius: var(--border-radius);
-    box-shadow: 0 0 2px black;
-  }
-
-  .variable {
-    font-weight: bold;
-  }
-
-  .answer {
-    align-self: center;
   }
 
   form {
@@ -130,4 +185,23 @@
     color: var(--color-error-foregound);
     background-color: var(--color-error-background);
   }
+
+  .helper {
+    display: grid;
+    align-items: center;
+    gap: calc(var(--margin) * 2);
+    padding: var(--padding);
+    background-color: var(--color-bg-2);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 2px black;
+  }
+
+  .variable {
+    font-weight: bold;
+  }
+
+  .answer {
+    align-self: center;
+  }
+
 </style>
