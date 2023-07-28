@@ -134,7 +134,7 @@
         meaning you're paying or earning interests on interests.
       </span>
       If you're looking to compute the future value given the other 3 numeric values,
-      this is the actual compounding interest rate calculation.
+      the equation above is going to give you an approximation into the future given a compounding interest rate.
 
       However, if you're looking to compute the present value,
       this is called discounting future cash back to the present.
