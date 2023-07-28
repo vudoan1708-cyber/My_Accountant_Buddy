@@ -1,0 +1,17 @@
+{
+  "name": "my-accountant-buddy",
+  "version": "1.0.0",
+  "description": "My personal accountaning software",
+  "scripts": {
+    "dev": "concurrently --kill-others \"cd ./frontend && npm run dev -- --open\" \"cd ./backend && npm run dev\""
+  },
+  "keywords": [
+    "accounting",
+    "finance"
+  ],
+  "author": "Vu Doan",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
