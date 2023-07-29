@@ -235,6 +235,7 @@
     align-items: flex-end;
     gap: calc(var(--margin) / 2);
     padding: var(--padding);
+    word-break: break-all;
   }
 
   .result .exp {
