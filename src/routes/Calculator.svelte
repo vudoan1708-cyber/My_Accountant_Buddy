@@ -13,6 +13,7 @@
 
   /** @type {HTMLInputElement?} */
   let calcInputElement = null;
+  let calcInputVal = '';
   const changeState = () => {
     state = state === 'open' ? 'close' : 'open';
 
@@ -28,13 +29,12 @@
 	 */
   /** @type {CalculationResult[]} */
   let results = [];
-  const onKeyDown = (/** @type {KeyboardEvent} */ e) => {
+  const onKeyDown = (/** @type {string} */ key) => {
     try {
-      if (e.key === 'Enter' || e.keyCode === 13) {
+      if (key === 'Enter') {
         // @ts-ignore
-        const exp = e.target?.value;
-        const val = evaluate(exp);
-        results = [ { expression: exp, value: val }, ...results ];
+        const val = evaluate(calcInputVal);
+        results = [ { expression: calcInputVal, value: val }, ...results ];
 
         // Reassign the displayed value to the new result
         if (!calcInputElement) return;
@@ -43,6 +43,18 @@
     } catch (ex) {
       alert(ex);
     }
+  };
+
+  const formExpression = (/** @type {string} */ entry) => {
+    if (!entry) {
+      calcInputVal = '';
+      return;
+    }
+    if (entry === '=') {
+      onKeyDown('Enter');
+      return;
+    }
+    calcInputVal += entry;
   };
 
   $: button = {
@@ -77,27 +89,28 @@
     <input
       type="text"
       class="calculator_input"
+      bind:value={calcInputVal}
       bind:this={calcInputElement}
-      on:keydown={onKeyDown} />
+      on:keydown={(e) => { onKeyDown(e.key); }} />
   </div>
   <div class="calculator_part calculator_keys">
-    <button class="key--operator" data-action="add">+</button>
-    <button class="key--operator" data-action="subtract">-</button>
-    <button class="key--operator" data-action="multiply">&times;</button>
-    <button class="key--operator" data-action="divide">÷</button>
-    <button>7</button>
-    <button>8</button>
-    <button>9</button>
-    <button>4</button>
-    <button>5</button>
-    <button>6</button>
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>0</button>
-    <button data-action="decimal">.</button>
-    <button data-action="clear">AC</button>
-    <button class="key--equal" data-action="calculate">=</button>
+    <button class="key--operator" data-action="add" on:click={() => { formExpression('+') }}>+</button>
+    <button class="key--operator" data-action="subtract" on:click={() => { formExpression('-') }}>-</button>
+    <button class="key--operator" data-action="multiply" on:click={() => { formExpression('*') }}>&times;</button>
+    <button class="key--operator" data-action="divide" on:click={() => { formExpression('/') }}>÷</button>
+    <button on:click={() => { formExpression('7') }}>7</button>
+    <button on:click={() => { formExpression('8') }}>8</button>
+    <button on:click={() => { formExpression('9') }}>9</button>
+    <button on:click={() => { formExpression('4') }}>4</button>
+    <button on:click={() => { formExpression('5') }}>5</button>
+    <button on:click={() => { formExpression('6') }}>6</button>
+    <button on:click={() => { formExpression('1') }}>1</button>
+    <button on:click={() => { formExpression('2') }}>2</button>
+    <button on:click={() => { formExpression('3') }}>3</button>
+    <button on:click={() => { formExpression('0') }}>0</button>
+    <button data-action="decimal" on:click={() => { formExpression('.') }}>.</button>
+    <button data-action="clear" on:click={() => { formExpression('') }}>AC</button>
+    <button class="key--equal" data-action="calculate" on:click={() => { formExpression('=') }}>=</button>
   </div>
   <div class="calculator_part results">
     {#each results as result}
