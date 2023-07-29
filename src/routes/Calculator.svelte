@@ -5,9 +5,10 @@
 
   // Component
   import Button from "$lib/components/Button.svelte";
+	import { tick } from "svelte";
 
   /** @type {'open' | 'close'} */
-  export let state = 'open';
+  export let state = 'close';
 
   let windowResolutionObserver = 0;
 
@@ -37,15 +38,14 @@
         results = [ { expression: calcInputVal, value: val }, ...results ];
 
         // Reassign the displayed value to the new result
-        if (!calcInputElement) return;
-        calcInputElement.value = val;
+        calcInputVal = val;
       }
     } catch (ex) {
       alert(ex);
     }
   };
 
-  const formExpression = (/** @type {string} */ entry) => {
+  const formExpression = async (/** @type {string} */ entry) => {
     if (!entry) {
       calcInputVal = '';
       return;
@@ -55,6 +55,12 @@
       return;
     }
     calcInputVal += entry;
+
+    if (!calcInputElement) return;
+
+    await tick();
+    calcInputElement.focus();
+    calcInputElement.scrollLeft = calcInputElement.scrollWidth;
   };
 
   $: button = {
@@ -94,23 +100,47 @@
       on:keydown={(e) => { onKeyDown(e.key); }} />
   </div>
   <div class="calculator_part calculator_keys">
-    <button class="key--operator" data-action="add" on:click={() => { formExpression('+') }}>+</button>
-    <button class="key--operator" data-action="subtract" on:click={() => { formExpression('-') }}>-</button>
-    <button class="key--operator" data-action="multiply" on:click={() => { formExpression('*') }}>&times;</button>
-    <button class="key--operator" data-action="divide" on:click={() => { formExpression('/') }}>÷</button>
-    <button on:click={() => { formExpression('7') }}>7</button>
-    <button on:click={() => { formExpression('8') }}>8</button>
-    <button on:click={() => { formExpression('9') }}>9</button>
-    <button on:click={() => { formExpression('4') }}>4</button>
-    <button on:click={() => { formExpression('5') }}>5</button>
-    <button on:click={() => { formExpression('6') }}>6</button>
-    <button on:click={() => { formExpression('1') }}>1</button>
-    <button on:click={() => { formExpression('2') }}>2</button>
-    <button on:click={() => { formExpression('3') }}>3</button>
-    <button on:click={() => { formExpression('0') }}>0</button>
-    <button data-action="decimal" on:click={() => { formExpression('.') }}>.</button>
-    <button data-action="clear" on:click={() => { formExpression('') }}>AC</button>
-    <button class="key--equal" data-action="calculate" on:click={() => { formExpression('=') }}>=</button>
+    <button
+      class="key--operator"
+      data-action="add"
+      on:mousedown|preventDefault
+      on:click={() => { formExpression('+') }}>
+      +
+    </button>
+    <button
+      class="key--operator"
+      data-action="subtract"
+      on:mousedown|preventDefault
+      on:click={() => { formExpression('-') }}>
+      -
+    </button>
+    <button
+      class="key--operator"
+      data-action="multiply"
+      on:mousedown|preventDefault
+      on:click={() => { formExpression('*') }}>
+      &times;
+    </button>
+    <button
+      class="key--operator"
+      data-action="divide"
+      on:mousedown|preventDefault
+      on:click={() => { formExpression('/') }}>
+      ÷
+    </button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('7') }}>7</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('8') }}>8</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('9') }}>9</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('4') }}>4</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('5') }}>5</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('6') }}>6</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('1') }}>1</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('2') }}>2</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('3') }}>3</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('0') }}>0</button>
+    <button data-action="decimal" on:mousedown|preventDefault on:click={() => { formExpression('.') }}>.</button>
+    <button data-action="clear" on:mousedown|preventDefault on:click={() => { formExpression('') }}>AC</button>
+    <button class="key--equal" data-action="calculate" on:mousedown|preventDefault on:click={() => { formExpression('=') }}>=</button>
   </div>
   <div class="calculator_part results">
     {#each results as result}
