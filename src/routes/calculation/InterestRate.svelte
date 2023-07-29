@@ -150,7 +150,7 @@
         </span>: Future Value - A financial value in the <b>present time</b>
       </li>
       <li>
-        <span class="variable">T</span>: The compounding periods (is usually counted in <b>months</b> per year).
+        <span class="variable">T</span>: The compounding periods (is usually counted in <b>months</b>).
         <i>*This is not computable for the time being</i>
       </li>
     </ul>

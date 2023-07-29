@@ -1,5 +1,6 @@
 <script>
 	import Header from './Header.svelte';
+	import Calculator from './Calculator.svelte';
 	import './styles.css';
 </script>
 
@@ -15,6 +16,8 @@
 			Visit <a href="https://github.com/vudoan1708-cyber/" target="_blank">vudoan1708-cyber</a> to learn more about me
 		</p>
 	</footer>
+
+	<Calculator />
 </div>
 
 <style>

@@ -28,7 +28,7 @@
 	--color-bg-0: rgb(202, 216, 228);
 	--color-bg-1: hsl(209, 36%, 86%);
 	--color-bg-2: hsl(224, 44%, 95%);
-	--color-theme-1: #ff3e00;
+	--color-theme-1: #8c00ff;
 	--color-theme-2: #4075a6;
 	--color-theme-2-light: #81b3e1;
 	--color-on-theme-1: #f1f1f1;
@@ -107,6 +107,11 @@ input,
 button {
 	font-size: inherit;
 	font-family: inherit;
+}
+input {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 button:focus:not(:focus-visible) {
