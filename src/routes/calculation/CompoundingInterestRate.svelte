@@ -71,6 +71,7 @@
         type="number"
         step="0.01"
         min="0"
+        class:finalAnswer={unknown === 'fv' && variables[unknown]}
         bind:value={variables.fv} />
     </label>
 
@@ -82,6 +83,7 @@
         type="number"
         step="0.01"
         min="0"
+        class:finalAnswer={unknown === 'pv' && variables[unknown]}
         bind:value={variables.pv} />
     </label>
 
@@ -97,6 +99,7 @@
           type="number"
           step="0.01"
           min="0"
+          class:finalAnswer={unknown === 'r' && variables[unknown]}
           bind:value={variables.r} />
       </label>
         %
@@ -111,6 +114,7 @@
         type="number"
         step="0.01"
         min="0"
+        class:finalAnswer={unknown === 't' && variables[unknown]}
         bind:value={variables.t} />
     </label>
   </form>
@@ -131,13 +135,13 @@
 
     However, if you're looking to compute the present value -
     this is called discounting future cash back to the present, where, given future value, interest rate and time,
-    you can estimate how much is needed to deposit into your bank account.
+    you can estimate how much money is needed to deposit into your bank account now.
     Below are the explanation of the notations:
     <ul>
       <li><span class="variable">FV</span>: Future Value - A financial value in the <b>future time</b></li>
       <li><span class="variable">PV</span>: Future Value - A financial value in the <b>present time</b></li>
-      <li><span class="variable">R</span>: The <b>compounding interest rate</b></li>
-      <li><span class="variable">T</span>: The time value of the money (is usually counted in <b>years)</b></li>
+      <li><span class="variable">R</span>: The <b>compounding interest rate</b> (either effective or nominal rate)</li>
+      <li><span class="variable">T</span>: The time value of the money (is usually counted in <b>years</b>)</li>
     </ul>
   </div>
 
@@ -184,6 +188,12 @@
     border-color: var(--color-error-foregound);
     color: var(--color-error-foregound);
     background-color: var(--color-error-background);
+  }
+
+  input.finalAnswer {
+    border-color: var(--color-theme-2-light);
+    color: var(--color-on-theme-2);
+    background-color: var(--color-theme-2);
   }
 
   .helper {

@@ -10,7 +10,7 @@
   const variables = {
     effectiveRate: 0,
     nominalRate: 0,
-    time: 0,
+    time: 1,
     unknown: 0,
   };
   /** @type {'effectiveRate' | 'nominalRate' | 'time' | 'unknown'} */
@@ -21,7 +21,8 @@
 
     if (!variables.effectiveRate) return 'effectiveRate';
     if (!variables.nominalRate) return 'nominalRate';
-    if (!variables.time) return 'time';
+    // We don't calculate time for this as not very needed
+    // if (!variables.time) return 'time';
     return 'unknown';
   }
 
@@ -31,13 +32,14 @@
       const decimal = ((1 + (variables.nominalRate / 100 / variables.time)) ** variables.time) - 1;
       return superParseFloat(decimal * 100, 2);
     },
-    /** @description the division of FV and the addition of 1 and rate percent to the t-th power */
+    /** @description the multiplication of time periods and the t-th root of effective rate plus 1, subtracted by 1 */
     nominalRate() {
-      return 0;
+      const tRootPart = (superParseFloat(variables.effectiveRate / 100) + 1) ** (1 / variables.time)
+      return superParseFloat(variables.time * (tRootPart - 1)) * 100;
     },
     /** @description t-th root of FV over PV minus 1 */
     time() {
-      return 0;
+      return 1;
     },
     unknown() {
       return 0;
@@ -47,24 +49,27 @@
   const clear = () => {
     variables.effectiveRate = 0;
     variables.nominalRate = 0;
-    variables.time = 0;
+    variables.time = 1;
   };
 
   let isMounted = false;
   onMount(() => {
     isMounted = true;
   });
+
+  $: calculateBtnDisabled = !isMounted || Boolean(document.querySelector('input:invalid'));
 </script>
 
 <!-- <template> -->
 <section>
   <form on:submit|preventDefault>
     <label>
-      <span class="variable">R <sub class="variable s-PmlP8qtSOywl">effective</sub></span>
+      <span class="variable">R <sub class="variable">effective</sub></span>
       <input
         type="number"
         step="0.01"
         min="0"
+        class:finalAnswer={unknown === 'effectiveRate' && variables[unknown]}
         bind:value={variables.effectiveRate} />
     </label>
 
@@ -76,11 +81,12 @@
         +
       <span class="r_over_preiod_division">
         <span>
-            <span class="variable">R <sub class="variable s-PmlP8qtSOywl">nominal</sub></span>
+            <span class="variable">R <sub class="variable">nominal</sub></span>
             <input
               type="number"
               step="0.01"
               min="0"
+              class:finalAnswer={unknown === 'nominalRate' && variables[unknown]}
               bind:value={variables.nominalRate} />
             %
           </span>
@@ -92,7 +98,8 @@
             <input
               type="number"
               step="0.01"
-              min="0"
+              min="1"
+              class:finalAnswer={unknown === 'time' && variables[unknown]}
               bind:value={variables.time} />
           </span>
       </span>
@@ -106,7 +113,8 @@
       <input
         type="number"
         step="0.01"
-        min="0"
+        min="1"
+        class:finalAnswer={unknown === 'time' && variables[unknown]}
         bind:value={variables.time} />)
     </label>
 
@@ -121,7 +129,31 @@
 
   <!-- Helper -->
   <div class="helper">
-    
+    <span>
+      The formula above is used to calculate the interest rate whether it is
+      for the <b>nominal rate (stated rate / annual percentage rate (APR))</b>
+      or for the <b>effective rate (compound annualised rate)</b>.
+    </span>
+    This is to determine the actual rate value that you'll realistically get,
+    as sometimes, based on different wordings, the actual computation will be different.
+    Below are the explanation of the notations:
+
+    <ul>
+      <li>
+        <span class="variable">
+          R <sub class="variable">effective</sub>
+        </span>: Future Value - A financial value in the <b>future time</b>
+      </li>
+      <li>
+        <span class="variable">
+          R <sub class="variable">nominal</sub>
+        </span>: Future Value - A financial value in the <b>present time</b>
+      </li>
+      <li>
+        <span class="variable">T</span>: The compounding periods (is usually counted in <b>months</b> per year).
+        <i>*This is not computable for the time being</i>
+      </li>
+    </ul>
   </div>
 
   <span style="align-self: flex-end;">
@@ -167,6 +199,12 @@
     border-color: var(--color-error-foregound);
     color: var(--color-error-foregound);
     background-color: var(--color-error-background);
+  }
+
+  input.finalAnswer {
+    border-color: var(--color-theme-2-light);
+    color: var(--color-on-theme-2);
+    background-color: var(--color-theme-2);
   }
 
   hr {
