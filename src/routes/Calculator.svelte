@@ -1,6 +1,4 @@
 <script>
-  import { slide } from "svelte/transition";
-
   import { evaluate } from 'mathjs';
 
   // Component
@@ -89,8 +87,7 @@
 
 <section
   id="Calculator"
-  class:closed={state === 'close'}
-  transition:slide={{ delay: 200 }}>
+  class:closed={state === 'close'}>
   <div class="calculator_part calculator_display">
     <input
       type="text"
@@ -104,43 +101,43 @@
       class="key--operator"
       data-action="add"
       on:mousedown|preventDefault
-      on:click={() => { formExpression('+') }}>
+      on:click={() => { formExpression('+'); }}>
       +
     </button>
     <button
       class="key--operator"
       data-action="subtract"
       on:mousedown|preventDefault
-      on:click={() => { formExpression('-') }}>
+      on:click={() => { formExpression('-'); }}>
       -
     </button>
     <button
       class="key--operator"
       data-action="multiply"
       on:mousedown|preventDefault
-      on:click={() => { formExpression('*') }}>
+      on:click={() => { formExpression('*'); }}>
       &times;
     </button>
     <button
       class="key--operator"
       data-action="divide"
       on:mousedown|preventDefault
-      on:click={() => { formExpression('/') }}>
+      on:click={() => { formExpression('/'); }}>
       ÷
     </button>
-    <button on:mousedown|preventDefault on:click={() => { formExpression('7') }}>7</button>
-    <button on:mousedown|preventDefault on:click={() => { formExpression('8') }}>8</button>
-    <button on:mousedown|preventDefault on:click={() => { formExpression('9') }}>9</button>
-    <button on:mousedown|preventDefault on:click={() => { formExpression('4') }}>4</button>
-    <button on:mousedown|preventDefault on:click={() => { formExpression('5') }}>5</button>
-    <button on:mousedown|preventDefault on:click={() => { formExpression('6') }}>6</button>
-    <button on:mousedown|preventDefault on:click={() => { formExpression('1') }}>1</button>
-    <button on:mousedown|preventDefault on:click={() => { formExpression('2') }}>2</button>
-    <button on:mousedown|preventDefault on:click={() => { formExpression('3') }}>3</button>
-    <button on:mousedown|preventDefault on:click={() => { formExpression('0') }}>0</button>
-    <button data-action="decimal" on:mousedown|preventDefault on:click={() => { formExpression('.') }}>.</button>
-    <button data-action="clear" on:mousedown|preventDefault on:click={() => { formExpression('') }}>AC</button>
-    <button class="key--equal" data-action="calculate" on:mousedown|preventDefault on:click={() => { formExpression('=') }}>=</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('7'); }}>7</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('8'); }}>8</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('9'); }}>9</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('4'); }}>4</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('5'); }}>5</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('6'); }}>6</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('1'); }}>1</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('2'); }}>2</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('3'); }}>3</button>
+    <button on:mousedown|preventDefault on:click={() => { formExpression('0'); }}>0</button>
+    <button data-action="decimal" on:mousedown|preventDefault on:click={() => { formExpression('.'); }}>.</button>
+    <button data-action="clear" on:mousedown|preventDefault on:click={() => { formExpression(''); }}>AC</button>
+    <button class="key--equal" data-action="calculate" on:mousedown|preventDefault on:click={() => { formExpression('='); }}>=</button>
   </div>
   <div class="calculator_part results">
     {#each results as result}
@@ -167,8 +164,10 @@
     display: grid;
     grid-template-rows: 100px 1fr 300px;
     grid-gap: var(--border-width);
-    overflow: hidden;
     background-color: var(--color-neutral-900);
+    box-shadow: 0 0 2px black;
+    overflow: hidden;
+    transition: width .2s ease-out;
   }
 
   section#Calculator.closed {
