@@ -1,13 +1,14 @@
 <script>
-	import Button from "$lib/components/Button.svelte";
+  import Button from "$lib/components/Button.svelte";
 
   // Utils
-  import { replaceStateWithQuery } from "$lib/helpers/replaceStateWithQuery";
+  import { replaceStateWithQuery, superParseFloat } from "$lib/helpers";
 
   import { defaultDcfTemplate } from "./constants";
 
   /** @type {import('./$types').PageData['allPayments']} */
   export let allPayments = [];
+  export let rate = 0;
 
   const addPeriod = () => {
     allPayments = [ ...allPayments, defaultDcfTemplate(allPayments.length) ];
@@ -17,6 +18,7 @@
     // Update URL parameter
     replaceStateWithQuery({
       payments: allPayments.map((p) => p.payment.value).filter((v, idx) => idx !== 0 && v).join('_'),
+      rate: !rate ? null : Number(rate),
     });
   };
 
@@ -24,7 +26,16 @@
     allPayments = [ allPayments[0] ];
   };
 
-  $: calcBtnDisabled = allPayments.length === 1 || allPayments.slice(1).some((p) => !p.payment.value);
+  const calculate = () => {
+    allPayments[0].payment.value = allPayments
+      .slice(1)
+      .map((p) => p.payment.value)
+      .reduce((prev, curr, idx) => (
+        superParseFloat(prev) + superParseFloat(superParseFloat(curr) / ((1 + rate / 100) ** (idx + 1)))
+      ), 0);
+  };
+
+  $: calcBtnDisabled = !rate || allPayments.length === 1 || allPayments.slice(1).some((p) => !p.payment.value);
 </script>
 
 <!-- <template> -->
@@ -60,7 +71,7 @@
   <Button type="secondary" title="Clear all created nodes" on:click={clearTimeline}>
     Clear
   </Button>
-  <Button disabled={calcBtnDisabled}>
+  <Button disabled={calcBtnDisabled} title="Calculate DCF" on:click={calculate}>
     Calculate
   </Button>
 </div>

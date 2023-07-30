@@ -5,6 +5,7 @@ export const prerender = false;
 /** @type {import('./$types').PageLoad} */
 export function load({ url }) {
   const payments = url.searchParams.get('payments');
+  const rate = url.searchParams.get('rate');
 
   if (!payments?.match(/(\d{0,9}_?)?/)) {
     return {
@@ -20,6 +21,7 @@ export function load({ url }) {
           }
         },
       ],
+      rate: Number(rate),
     };
   }
 
@@ -34,6 +36,7 @@ export function load({ url }) {
         disabled: idx === 0,
         value: p === '' ? p : Number(p),
       }
-    }))
+    })),
+    rate: Number(rate),
   };
 }
