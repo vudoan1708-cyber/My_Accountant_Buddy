@@ -81,27 +81,27 @@
         +
       <span class="r_over_preiod_division">
         <span>
-            <span class="variable">R <sub class="variable">nominal</sub></span>
-            <input
-              type="number"
-              step="0.01"
-              min="0"
-              class:finalAnswer={unknown === 'nominalRate' && variables[unknown]}
-              bind:value={variables.nominalRate} />
+          <span class="variable">R <sub class="variable">nominal</sub></span>
+          <input
+            type="number"
+            step="0.01"
+            min="0"
+            class:finalAnswer={unknown === 'nominalRate' && variables[unknown]}
+            bind:value={variables.nominalRate} />
             %
-          </span>
+        </span>
 
-          <hr />
+        <hr />
 
-          <span>
-            <span class="variable">T</span>
-            <input
-              type="number"
-              step="0.01"
-              min="1"
-              class:finalAnswer={unknown === 'time' && variables[unknown]}
-              bind:value={variables.time} />
-          </span>
+        <span>
+          <span class="variable">T</span>
+          <input
+            type="number"
+            step="0.01"
+            min="1"
+            class:finalAnswer={unknown === 'time' && variables[unknown]}
+            bind:value={variables.time} />
+        </span>
       </span>
       )
     </label>

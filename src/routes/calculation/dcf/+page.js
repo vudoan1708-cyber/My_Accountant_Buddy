@@ -3,7 +3,37 @@
 export const prerender = true;
 
 /** @type {import('./$types').PageLoad} */
-export function load() {
+export function load({ url }) {
+  const payments = url.searchParams.get('payments');
+
+  if (!payments?.match(/(\d{0,9},?)?/)) {
+    return {
+      allPayments: [
+        {
+          period: {
+            disabled: true,
+            value: 0,
+          },
+          payment: {
+            disabled: true,
+            value: '',
+          }
+        },
+      ],
+    };
+  }
+
+  const allPayments = [ '', ...payments.split(',') ];
   return {
+    allPayments: allPayments.map((p, idx) => ({
+      period: {
+        disabled: true,
+        value: idx,
+      },
+      payment: {
+        disabled: idx === 0,
+        value: p === '' ? p : Number(p),
+      }
+    }))
   };
 }

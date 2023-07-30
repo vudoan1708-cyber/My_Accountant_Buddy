@@ -100,6 +100,7 @@
     <button
       class="key--operator"
       data-action="add"
+      title="Addition"
       on:mousedown|preventDefault
       on:click={() => { formExpression('+'); }}>
       +
@@ -107,6 +108,7 @@
     <button
       class="key--operator"
       data-action="subtract"
+      title="Subtraction"
       on:mousedown|preventDefault
       on:click={() => { formExpression('-'); }}>
       -
@@ -114,6 +116,7 @@
     <button
       class="key--operator"
       data-action="multiply"
+      title="Multiplication"
       on:mousedown|preventDefault
       on:click={() => { formExpression('*'); }}>
       &times;
@@ -121,6 +124,7 @@
     <button
       class="key--operator"
       data-action="divide"
+      title="Division"
       on:mousedown|preventDefault
       on:click={() => { formExpression('/'); }}>
       ÷
@@ -135,9 +139,28 @@
     <button on:mousedown|preventDefault on:click={() => { formExpression('2'); }}>2</button>
     <button on:mousedown|preventDefault on:click={() => { formExpression('3'); }}>3</button>
     <button on:mousedown|preventDefault on:click={() => { formExpression('0'); }}>0</button>
-    <button data-action="decimal" on:mousedown|preventDefault on:click={() => { formExpression('.'); }}>.</button>
-    <button data-action="clear" on:mousedown|preventDefault on:click={() => { formExpression(''); }}>AC</button>
-    <button class="key--equal" data-action="calculate" on:mousedown|preventDefault on:click={() => { formExpression('='); }}>=</button>
+    <button
+      data-action="decimal"
+      title="Decimal"
+      on:mousedown|preventDefault
+      on:click={() => { formExpression('.'); }}>
+      .
+    </button>
+    <button
+      data-action="clear"
+      title="Clear All"
+      on:mousedown|preventDefault
+      on:click={() => { formExpression(''); }}>
+      AC
+    </button>
+    <button
+      class="key--equal"
+      data-action="calculate"
+      title="Equal"
+      on:mousedown|preventDefault
+      on:click={() => { formExpression('='); }}>
+      =
+    </button>
   </div>
   <div class="calculator_part results">
     {#each results as result}
@@ -217,6 +240,10 @@
     background-image: linear-gradient(to bottom, #bb6afe, var(--color-theme-1));
     grid-column: -2;
     grid-row: 2 / span 4;
+  }
+
+  button[data-action="clear"] {
+    color: var(--color-error-foreground);
   }
 
   .results {
