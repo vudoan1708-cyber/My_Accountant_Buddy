@@ -6,7 +6,7 @@ export const prerender = false;
 export function load({ url }) {
   const payments = url.searchParams.get('payments');
 
-  if (!payments?.match(/(\d{0,9},?)?/)) {
+  if (!payments?.match(/(\d{0,9}_?)?/)) {
     return {
       allPayments: [
         {
@@ -23,7 +23,7 @@ export function load({ url }) {
     };
   }
 
-  const allPayments = [ '', ...payments.split(',') ];
+  const allPayments = [ '', ...payments.split('_') ];
   return {
     allPayments: allPayments.map((p, idx) => ({
       period: {

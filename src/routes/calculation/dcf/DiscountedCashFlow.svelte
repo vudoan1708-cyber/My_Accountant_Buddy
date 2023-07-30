@@ -1,6 +1,9 @@
 <script>
 	import Button from "$lib/components/Button.svelte";
 
+  // Utils
+  import { replaceStateWithQuery } from "$lib/helpers/replaceStateWithQuery";
+
   import { defaultDcfTemplate } from "./constants";
 
   /** @type {import('./$types').PageData['allPayments']} */
@@ -9,6 +12,19 @@
   const addPeriod = () => {
     allPayments = [ ...allPayments, defaultDcfTemplate(allPayments.length) ];
   };
+
+  const onInputBlur = () => {
+    // Update URL parameter
+    replaceStateWithQuery({
+      payments: allPayments.map((p) => p.payment.value).filter((v, idx) => idx !== 0 && v).join('_'),
+    });
+  };
+
+  const clearTimeline = () => {
+    allPayments = [ allPayments[0] ];
+  };
+
+  $: calcBtnDisabled = allPayments.length === 1 || allPayments.slice(1).some((p) => !p.payment.value);
 </script>
 
 <!-- <template> -->
@@ -29,7 +45,8 @@
           type="text"
           placeholder="Payment"
           disabled={paymentData.payment.disabled}
-          value={paymentData.payment.value} />
+          bind:value={paymentData.payment.value}
+          on:blur={onInputBlur} />
       </div>
     </form>
   {/each}
@@ -38,12 +55,24 @@
     +
   </Button>
 </section>
+
+<div class="btn_wrapper">
+  <Button type="secondary" title="Clear all created nodes" on:click={clearTimeline}>
+    Clear
+  </Button>
+  <Button disabled={calcBtnDisabled}>
+    Calculate
+  </Button>
+</div>
 <!-- </template> -->
 
 <style>
   section.dcf_graph {
     --pointer-len: calc(var(--margin) * 2);
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: calc(var(--margin) * 3);
     box-shadow: 0 0 2px black;
     padding: calc(var(--padding) * 2);
   }
@@ -89,5 +118,9 @@
     width: var(--border-width);
     height: var(--pointer-len);
     background-color: var(--color-neutral-600);
+  }
+
+  .btn_wrapper {
+    align-self: flex-end;
   }
 </style>
