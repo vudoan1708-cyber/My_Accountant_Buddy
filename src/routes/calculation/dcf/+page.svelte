@@ -30,6 +30,6 @@
   .contents {
     display: flex;
     flex-direction: column;
-    gap: calc(var(--margin) * 5);
+    gap: calc(var(--margin) * 2);
   }
 </style>

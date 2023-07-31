@@ -237,7 +237,7 @@
   }
 
   .key--equal {
-    background-image: linear-gradient(to bottom, #bb6afe, var(--color-theme-1));
+    background-image: linear-gradient(to bottom, #8326cf, var(--color-theme-1));
     grid-column: -2;
     grid-row: 2 / span 4;
   }

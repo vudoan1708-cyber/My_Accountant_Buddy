@@ -114,6 +114,12 @@ input {
 	box-sizing: border-box;
 }
 
+label {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--margin);
+}
+
 button:focus:not(:focus-visible) {
 	outline: none;
 }
