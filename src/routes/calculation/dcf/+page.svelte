@@ -15,7 +15,7 @@
     <h1>Calculate discounted cash flow</h1>
 
     <div class="contents">
-      <DiscountedCashFlow allPayments={data.allPayments} rate={data.rate} />
+      <DiscountedCashFlow allPayments={data.allPayments} rate={data.rate} category={data.category} />
     </div>
   </section>
 <!-- </template> -->

@@ -6,6 +6,7 @@ export const prerender = false;
 export function load({ url }) {
   const payments = url.searchParams.get('payments');
   const rate = url.searchParams.get('rate');
+  const category = url.searchParams.get('category') || 'diff';
 
   if (!payments?.match(/(\d{0,9}_?)?/)) {
     return {
@@ -22,6 +23,7 @@ export function load({ url }) {
         },
       ],
       rate: Number(rate),
+      /** @type {'diff' | 'same'} */ category: category === 'same' ? 'same' : 'diff',
     };
   }
 
@@ -38,5 +40,6 @@ export function load({ url }) {
       }
     })),
     rate: Number(rate),
+    /** @type {'diff' | 'same'} */ category: category === 'same' ? 'same' : 'diff',
   };
 }
