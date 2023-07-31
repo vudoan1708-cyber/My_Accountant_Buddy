@@ -142,18 +142,20 @@
       <li>
         <span class="variable">
           R <sub class="variable">effective</sub>
-        </span>: Future Value - A financial value in the <b>future time</b>
+        </span>: The <b>effective rate</b> (annually compounded rate)
       </li>
       <li>
         <span class="variable">
           R <sub class="variable">nominal</sub>
-        </span>: Future Value - A financial value in the <b>present time</b>
+        </span>: The <b>nominal rate</b> (advertised rate / stated rate / APR)
       </li>
       <li>
         <span class="variable">T</span>: The compounding periods (is usually counted in <b>months</b>).
         <i>*This is not computable for the time being</i>
       </li>
     </ul>
+
+    <strong>**Leave an input field <u>empty or zero</u> to compute it</strong>
   </div>
 
   <span style="align-self: flex-end;">

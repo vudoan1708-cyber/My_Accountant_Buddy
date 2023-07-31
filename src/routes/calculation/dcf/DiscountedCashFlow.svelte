@@ -98,6 +98,8 @@
     future cash, the compounding periods and you should be able to discount the value back into the present to determine
     the opportunity of an investment,... by comparing the initial value vs. the DCF valuation.
   </span>
+
+  <strong>**Add in all periodical payments and rate to compute DCF valuation - The period 0</strong>
 </div>
 
 <div class="btn_wrapper">

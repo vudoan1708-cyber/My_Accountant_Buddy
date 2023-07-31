@@ -143,6 +143,8 @@
       <li><span class="variable">R</span>: The <b>compounding interest rate</b> (either effective or nominal rate)</li>
       <li><span class="variable">T</span>: The compounding period (is usually counted in <b>years</b>)</li>
     </ul>
+
+    <strong>**Leave an input field <u>empty or zero</u> to compute it</strong>
   </div>
 
   <span style="align-self: flex-end;">
