@@ -1,0 +1,15 @@
+[Fri Aug 11 21:18:11.559451 2023] [mpm_prefork:notice] [pid 8] AH00163: Apache/2.4.41 (Ubuntu) configured -- resuming normal operations
+[Fri Aug 11 21:18:11.560069 2023] [core:notice] [pid 8] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+[Fri Aug 11 21:19:29.803512 2023] [mpm_prefork:notice] [pid 8] AH00163: Apache/2.4.41 (Ubuntu) configured -- resuming normal operations
+[Fri Aug 11 21:19:29.804186 2023] [core:notice] [pid 8] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+[Fri Aug 11 21:22:02.021050 2023] [mpm_prefork:notice] [pid 8] AH00163: Apache/2.4.41 (Ubuntu) configured -- resuming normal operations
+[Fri Aug 11 21:22:02.021825 2023] [core:notice] [pid 8] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+[Fri Aug 11 21:24:47.361629 2023] [mpm_prefork:notice] [pid 9] AH00163: Apache/2.4.41 (Ubuntu) configured -- resuming normal operations
+[Fri Aug 11 21:24:47.362237 2023] [core:notice] [pid 9] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+[Fri Aug 11 21:26:32.994606 2023] [mpm_prefork:notice] [pid 8] AH00163: Apache/2.4.41 (Ubuntu) configured -- resuming normal operations
+[Fri Aug 11 21:26:32.995196 2023] [core:notice] [pid 8] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+[Fri Aug 11 21:34:10.659624 2023] [mpm_prefork:notice] [pid 8] AH00163: Apache/2.4.41 (Ubuntu) configured -- resuming normal operations
+[Fri Aug 11 21:34:10.660162 2023] [core:notice] [pid 8] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+[Sat Aug 12 08:51:05.003178 2023] [core:warn] [pid 8] AH00098: pid file /var/run/apache2/apache2.pid overwritten -- Unclean shutdown of previous Apache run?
+[Sat Aug 12 08:51:05.017244 2023] [mpm_prefork:notice] [pid 8] AH00163: Apache/2.4.41 (Ubuntu) configured -- resuming normal operations
+[Sat Aug 12 08:51:05.018855 2023] [core:notice] [pid 8] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'

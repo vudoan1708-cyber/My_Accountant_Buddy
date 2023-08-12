@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		
+		<link href="./_app/immutable/assets/0.f4b8eb8b.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/3.8035234e.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.af089409.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.41cd6b98.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.32e13568.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.10e2c674.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.7611e368.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.f1bd0394.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/stores.e18e8fee.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/3.b49330e4.js"><title>Calculation</title><!-- HEAD_svelte-vea1av_START --><meta name="description" content="Calculation"><!-- HEAD_svelte-vea1av_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">  <div class="app svelte-8o1gnw"><header class="svelte-17i5zuz"><nav class="svelte-17i5zuz"><svg viewBox="0 0 2 3" aria-hidden="true" class="svelte-17i5zuz"><path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" class="svelte-17i5zuz"></path></svg> <ul class="svelte-17i5zuz"><li class="svelte-17i5zuz"><a href="/" class="svelte-17i5zuz" data-svelte-h="svelte-5a0zws">Home</a></li> <li aria-current="page" class="svelte-17i5zuz"><a href="/calculation" class="svelte-17i5zuz" data-svelte-h="svelte-13ntsfp">Calculation</a></li></ul> <svg viewBox="0 0 2 3" aria-hidden="true" class="svelte-17i5zuz"><path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" class="svelte-17i5zuz"></path></svg></nav> </header> <main class="svelte-8o1gnw">  <section class="calculateSect svelte-1xyxuc7"><h1 data-svelte-h="svelte-at434j">Calculate with compounding interest rate</h1>  <form class="svelte-1xyxuc7"><label class="svelte-1xyxuc7"><span class="variable svelte-1xyxuc7" data-svelte-h="svelte-trno4l">FV</span> <input type="number" step="0.01" min="0" class="svelte-1xyxuc7" value="0"></label> <span data-svelte-h="svelte-u057kv">=</span> <label class="svelte-1xyxuc7"><span class="variable svelte-1xyxuc7" data-svelte-h="svelte-1d9zfar">PV</span> <input type="number" step="0.01" min="0" class="svelte-1xyxuc7" value="0"></label> <span data-svelte-h="svelte-1rhnbtu">x</span> <span>(
+          1
+          +
+        <label class="svelte-1xyxuc7"><span class="variable svelte-1xyxuc7" data-svelte-h="svelte-il9oor">R</span> <input type="number" step="0.01" min="0" class="svelte-1xyxuc7" value="0"></label>
+          %
+        )</span> <span data-svelte-h="svelte-10f4hr0">^</span> <label class="svelte-1xyxuc7"><span class="variable svelte-1xyxuc7" data-svelte-h="svelte-11x2x7h">T</span> <input type="number" step="0.01" min="0" class="svelte-1xyxuc7" value="0"></label></form>  <div class="answer svelte-1xyxuc7">Answer is <b style="text-decoration: underline;"></b></div>  <div class="helper svelte-1xyxuc7" data-svelte-h="svelte-1cjik6q"><span>The formula is used to calculate financial values with <b>compounding interest rates</b>,
+        meaning you&#39;re paying or earning interests on interests.</span>
+      If you&#39;re looking to compute the future value given the other 3 numeric values,
+      the equation above is going to give you an approximation into the future given a compounding interest rate.
+
+      However, if you&#39;re looking to compute the present value,
+      this is called discounting future cash back to the present.
+      Below are the explanation of the notations:
+      <ul><li><span class="variable svelte-1xyxuc7">FV</span>: Future Value - A financial value in the future time</li> <li><span class="variable svelte-1xyxuc7">PV</span>: Future Value - A financial value in the present time</li> <li><span class="variable svelte-1xyxuc7">R</span>: The compounding interest rate</li> <li><span class="variable svelte-1xyxuc7">T</span>: The time value of the money (is usually counted in years)</li></ul></div> <span style="align-self: flex-end;"> <button class="button secondary normal svelte-13qhr6c  disabled" data-testid="button" id="clear" disabled title=""><span>Clear</span></button>   <button class="button primary normal svelte-13qhr6c  disabled" data-testid="button" id="calculate" disabled title=""><span>Calculate</span></button> </span></section> </main> <footer class="svelte-8o1gnw" data-svelte-h="svelte-18hcv4"><p>Visit <a href="https://github.com/vudoan1708-cyber/" target="_blank" class="svelte-8o1gnw">vudoan1708-cyber</a> to learn more about me</p></footer> </div> 
+			
+			<script>
+				{
+					__sveltekit_9dxwrf = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.af089409.js"),
+						import("./_app/immutable/entry/app.10e2c674.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 3],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,61 @@
+version: "3.9"
+services:
+  my-accountant-buddy:
+    image: my-accountant-buddy
+    container_name: my-accountant-buddy
+    hostname: my-accountant-buddy.docker
+    restart: always
+    build:
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    ports:
+      - 80:80
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www/
+      - ./logs/:/var/log/apache2/
+    # command: >
+    #   bash -c "apachectl -D FOREGROUND &&
+    #   wget https://ui.voly.co.uk/production/common.min.css -P /var/www/css/"
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    env_file: .env
+    environment:
+      UPLOAD_LIMIT: 64M
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    platform: linux/amd64
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - accounting_database:/var/lib/mysql
+      - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql
+    healthcheck:
+      test: mysqladmin ping --password=root
+      start_period: 5s
+      interval: 1s
+      timeout: 5s
+      retries: 10
+      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    platform: linux/amd64
+    restart: always
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 256M
+    ports:
+      - 8001:80
+volumes:
+  accounting_database:
