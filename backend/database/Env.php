@@ -1,13 +1,13 @@
 <?php
-  namespace backend\database\loadenv;
+  namespace backend\database;
 
   // Reference: https://www.sourcecodester.com/tutorial/php/16035/load-environment-variables-env-file-using-php-tutorial
 
-  class LoadEnv {
+  class Env {
     private string $envFilePath;
 
     /**
-     * Construct a new LoadEnv instance
+     * Construct a new Env instance
      *
      * @param string $filePath     The realpath to the .env file.
     */
@@ -60,7 +60,7 @@
       }
     }
 
-    public function getEnv(string $name): string {
+    public function get(string $name): string {
       return $_ENV[$name];
     }
   }

@@ -27,15 +27,21 @@ services:
 
   mysql:
     image: mysql:5.7
-    container_name: mysql
+    container_name: buddy-mysql
     platform: linux/amd64
     restart: always
     ports:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_DB: ${MYSQL_DB}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - accounting_database:/var/lib/mysql
+      # Data layer is not recreated when the docker container is respun, the best way is to change the database name
+      # Reference: https://stackoverflow.com/questions/57643617/mariadb-docker-container-refuses-to-initialize-with-database-schema/62170878#62170878
+      - db_data:/var/lib/mysql
       - ./mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql
     healthcheck:
       test: mysqladmin ping --password=root
@@ -46,7 +52,7 @@ services:
       
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: pma
+    container_name: buddy-pma
     platform: linux/amd64
     restart: always
     links:
@@ -58,4 +64,4 @@ services:
     ports:
       - 8001:80
 volumes:
-  accounting_database:
+  db_data:

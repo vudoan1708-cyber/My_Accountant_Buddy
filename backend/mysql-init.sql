@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS `accountingbuddy-local`;
 
 -- create users and grant rights
 CREATE USER 'accountingbuddy'@'%' IDENTIFIED BY 'accountingbuddy';
-GRANT ALL ON *.* TO 'voly'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'accountingbuddy'@'%' WITH GRANT OPTION;
 
 FLUSH PRIVILEGES;
 
