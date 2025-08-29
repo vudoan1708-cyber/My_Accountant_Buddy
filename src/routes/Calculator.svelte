@@ -15,11 +15,20 @@
   /** @type {HTMLInputElement?} */
   let calcInputElement = null;
   let calcInputVal = '';
-  const changeState = () => {
-    state = state === 'open' ? 'close' : 'open';
+  /**
+   * @param newState {'open' | 'close'}
+   */
+  const changeState = (newState) => {
+    if (newState) {
+      state = newState;
+    } else {
+      state = state === 'open' ? 'close' : 'open';
+    }
 
     if (state === 'open') {
       calcInputElement?.focus();
+    } else {
+      calcInputElement?.blur();
     }
   };
 
@@ -65,10 +74,10 @@
 
   const closeCalculatorOnKeyUp = (e) => {
     if (e.key === 'Escape') {
-      state = 'close';
+      changeState('close');
     }
     if (e.key === 'c') {
-      state = 'open';
+      changeState('open');
     }
   };
 
