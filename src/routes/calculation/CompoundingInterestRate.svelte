@@ -139,7 +139,7 @@
     Below are the explanation of the notations:
     <ul>
       <li><span class="variable">FV</span>: Future Value - A financial value in the <b>future time</b></li>
-      <li><span class="variable">PV</span>: Future Value - A financial value in the <b>present time</b></li>
+      <li><span class="variable">PV</span>: Present Value - A financial value in the <b>present time</b></li>
       <li><span class="variable">R</span>: The <b>compounding interest rate</b> (either effective or nominal rate)</li>
       <li><span class="variable">T</span>: The compounding period (is usually counted in <b>years</b>)</li>
     </ul>

@@ -35,7 +35,7 @@
   {style}
   {disabled}
   {title}>
-  <span><slot /></span>
+  <slot />
 </button>
 <!-- </template> -->
 

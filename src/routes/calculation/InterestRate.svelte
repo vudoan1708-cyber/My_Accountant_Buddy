@@ -42,6 +42,7 @@
       return 1;
     },
     unknown() {
+      alert('Cannot perform a calculation, please make sure neccessary fields are filled and leave the desired field empty for calculation');
       return 0;
     }
   };

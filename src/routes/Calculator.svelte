@@ -1,9 +1,11 @@
 <script>
+	import { onDestroy, onMount, tick } from "svelte";
   import { evaluate } from 'mathjs';
+
+  import CalculatorIcon from '$lib/images/calculator.png';
 
   // Component
   import Button from "$lib/components/Button.svelte";
-	import { tick } from "svelte";
 
   /** @type {'open' | 'close'} */
   export let state = 'close';
@@ -61,24 +63,29 @@
     calcInputElement.scrollLeft = calcInputElement.scrollWidth;
   };
 
+  const closeCalculatorOnKeyUp = (e) => {
+    if (e.key === 'Escape') {
+      state = 'close';
+    }
+    if (e.key === 'c') {
+      state = 'open';
+    }
+  };
+
+  onMount(() => {
+    document.body.addEventListener('keyup', closeCalculatorOnKeyUp);
+  });
+  onDestroy(() => {
+    if (typeof document !== 'undefined') {
+      document.body.removeEventListener('keyup', closeCalculatorOnKeyUp);
+    }
+  });
+
   $: button = {
     textContent: {
-      open: '&lt Calculator',
-      close: '&gt Calculator',
+      open: 'Calculator',
+      close: 'Calculator',
     },
-    style: {
-      open: 'position: fixed; left: 400px; bottom: 0;',
-      close: 'position: fixed; left: 0; bottom: 0;',
-    },
-  };
-  $: if (windowResolutionObserver <= 770 && windowResolutionObserver > 540) {
-    button.style.open = 'position: fixed; left: 250px; bottom: 0;';
-  } else if (windowResolutionObserver <= 540) {
-    button.style.open = 'position: fixed; left: 200px; bottom: 0; font-size: 12px;';
-    button.style.close = 'position: fixed; left: 0; bottom: 0; font-size: 12px;';
-  } else {
-    button.style.open = 'position: fixed; left: 400px; bottom: 0;'
-    button.style.close = 'position: fixed; left: 0; bottom: 0; font-size: initial;';
   };
 </script>
 
@@ -91,10 +98,11 @@
   <div class="calculator_part calculator_display">
     <input
       type="text"
+      name="calculator_input"
       class="calculator_input"
       bind:value={calcInputVal}
       bind:this={calcInputElement}
-      on:keydown={(e) => { onKeyDown(e.key); }} />
+      on:keydown|stopPropagation={(e) => { onKeyDown(e.key); }} />
   </div>
   <div class="calculator_part calculator_keys">
     <button
@@ -172,9 +180,12 @@
   </div>
 </section>
 
-<Button id="calculator" style={button.style[state]} on:click={changeState}>
-  {@html button.textContent[state]}
-</Button>
+<div class={`calculator_wrapper ${state}`}>
+  <Button id="calculator" on:click={changeState}>
+    <img class="calculator" src={CalculatorIcon} alt="calculator" />
+    {@html button.textContent[state]}
+  </Button>
+</div>
 <!-- </template> -->
 
 <style>
@@ -185,7 +196,7 @@
     width: 400px;
     height: 100%;
     display: grid;
-    grid-template-rows: 100px 1fr 300px;
+    grid-template-rows: 100px 1fr 1fr;
     grid-gap: var(--border-width);
     background-color: var(--color-neutral-900);
     box-shadow: 0 0 2px black;
@@ -198,6 +209,19 @@
   }
   section#Calculator.closed div {
     width: 0;
+  }
+
+  .calculator_wrapper {
+    position: fixed;
+    transition: all .2s ease-out;
+  }
+  .calculator_wrapper.open {
+    left: 400px;
+    bottom: 0;
+  }
+  .calculator_wrapper.close {
+    left: 0;
+    bottom: 0;
   }
 
   .calculator_part {
@@ -276,14 +300,32 @@
     font-size: 25px;
   }
 
+  img.calculator {
+    width: 25px;
+  }
+
   @media screen and (max-width: 770px) {
     section#Calculator {
-      width: 250px;
+      top: unset;
+      bottom: 0;
+      width: 100%;
+      height: 400px;
+      transition: height .2s ease-out;
     }
-  }
-  @media screen and (max-width: 540px) {
-    section#Calculator {
-      width: 200px;
+    section#Calculator.closed {
+      height: 0;
+    }
+    section#Calculator.closed div {
+      height: 0;
+    }
+
+    .calculator_wrapper.open {
+      left: 0;
+      bottom: 400px;
+    }
+    .calculator_wrapper.close {
+      left: 0;
+      bottom: 0;
     }
   }
 </style>
